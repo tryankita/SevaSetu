@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '.env.local'), override: true });
 
 if (!process.env.JWT_SECRET) {
   throw new Error('JWT_SECRET is required. Please set it in your environment variables.');

@@ -27,6 +27,7 @@ import {
 const Home = () => {
   const { apiBaseUrl } = useContext(AuthContext);
   const [impactData, setImpactData] = useState(null);
+  const [heroImageFailed, setHeroImageFailed] = useState(false);
 
   const ambientStars = [
     { top: '11%', left: '14%', delay: '0.2s', duration: '18s', size: '1.8px', alpha: 0.72, dx: '14px', dy: '-9px' },
@@ -263,88 +264,25 @@ const Home = () => {
           </div>
 
           <div className="relative z-10 flex items-center justify-center">
-            <div className="relative h-[30rem] w-full max-w-[42rem] lg:h-[36rem]">
-              <div className="absolute left-1/2 top-1/2 h-[22rem] w-[22rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/12 blur-3xl"></div>
-              <div className="absolute left-1/2 top-1/2 h-[24rem] w-[24rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/25"></div>
-              <div className="absolute left-1/2 top-1/2 h-[19rem] w-[19rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-teal-400/25"></div>
-              <div className="absolute left-1/2 top-1/2 h-[14rem] w-[14rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.35),rgba(9,18,32,0.05)_70%)] shadow-[0_0_120px_rgba(16,185,129,0.18)]"></div>
-              <div className="absolute left-1/2 top-1/2 h-[12rem] w-[12rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-[radial-gradient(circle_at_30%_30%,rgba(34,211,238,0.12),transparent_40%),radial-gradient(circle_at_70%_70%,rgba(16,185,129,0.14),transparent_34%),linear-gradient(145deg,rgba(8,17,31,0.95),rgba(16,27,49,0.95))] shadow-[0_0_60px_rgba(14,165,164,0.22)]"></div>
-
-              <div className="absolute inset-0 animate-[spin_28s_linear_infinite] rounded-full opacity-60 [background:radial-gradient(circle_at_center,transparent_61%,rgba(20,44,72,0.8)_62%,transparent_63%),conic-gradient(from_180deg,transparent 0deg,rgba(16,185,129,0.18) 30deg,transparent 80deg,rgba(34,211,238,0.2) 130deg,transparent 200deg,rgba(245,158,11,0.18) 250deg,transparent 320deg,transparent_360deg)]"></div>
-
-              <div className="absolute left-1/2 top-[8%] h-[1px] w-[82%] -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan-300/50 to-transparent"></div>
-              <div className="absolute left-1/2 top-[20%] h-[1px] w-[92%] -translate-x-1/2 bg-gradient-to-r from-transparent via-teal-300/35 to-transparent"></div>
-              <div className="absolute left-1/2 top-[74%] h-[1px] w-[88%] -translate-x-1/2 bg-gradient-to-r from-transparent via-emerald-300/35 to-transparent"></div>
-
-              <div className="absolute left-[8%] top-[8%] h-16 w-16 rounded-full border border-cyan-300/25 bg-cyan-400/10 blur-[0.5px]"></div>
-              <div className="absolute right-[4%] top-[24%] h-4 w-4 rounded-full bg-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.7)]"></div>
-              <div className="absolute left-[16%] bottom-[14%] h-3 w-3 rounded-full bg-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.8)]"></div>
-              <div className="absolute right-[18%] bottom-[18%] h-2.5 w-2.5 rounded-full bg-cyan-200 shadow-[0_0_18px_rgba(103,232,249,0.7)]"></div>
-
-              <div className="hidden lg:absolute right-0 top-8 w-[22rem] rounded-3xl border border-teal-500/20 bg-[#0f1a31]/95 p-4 shadow-2xl shadow-cyan-950/30 backdrop-blur-md">
-                <div className="grid grid-cols-[1fr_auto] gap-4">
-                  <div>
-                    <div className="mb-3 inline-flex rounded-xl bg-teal-500/15 p-3 text-teal-300">
-                      <PackageCheck size={24} />
-                    </div>
-                    <h3 className="text-lg font-semibold text-text">Structured Requirements</h3>
-                    <p className="mt-2 max-w-[13rem] text-sm leading-6 text-textMuted">
-                      Every request is detailed with urgency and quantity, enabling smarter giving.
-                    </p>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="rounded-2xl border border-white/10 bg-[#111c33] p-3">
-                      <div className="mb-3 flex items-center justify-between gap-3 text-[10px] text-textMuted">
-                        <span className="rounded-full bg-teal-500/15 px-2 py-1 text-teal-300">Urgent</span>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="h-2 w-24 rounded-full bg-slate-700"></div>
-                        <div className="h-2 w-28 rounded-full bg-slate-700"></div>
-                        <div className="h-2 w-20 rounded-full bg-slate-700"></div>
-                      </div>
-                    </div>
-                    <ChevronRight size={18} className="ml-3 text-textMuted" />
-                  </div>
+            <div className="relative w-full max-w-[42rem] overflow-hidden rounded-[2rem] border border-white/10 bg-[#0f1a31]/90 shadow-2xl shadow-cyan-950/30">
+              {!heroImageFailed ? (
+                <img
+                  src="/hero-donation.png"
+                  alt="Volunteer delivering a SevaSetu donation package to a child"
+                  className="h-[22rem] w-full object-cover sm:h-[28rem] lg:h-[34rem]"
+                  onError={() => setHeroImageFailed(true)}
+                />
+              ) : (
+                <div className="flex h-[22rem] w-full items-center justify-center bg-gradient-to-br from-cyan-900/30 via-slate-900 to-emerald-900/20 text-center text-sm text-textMuted sm:h-[28rem] lg:h-[34rem]">
+                  Add your image at frontend/public/hero-donation.png
                 </div>
-              </div>
+              )}
 
-              <div className="hidden lg:absolute right-0 top-[13.8rem] w-[22rem] rounded-3xl border border-amber-500/20 bg-[#0f1a31]/95 p-4 shadow-2xl shadow-amber-950/20 backdrop-blur-md">
-                <div className="grid grid-cols-[auto_1fr_auto] items-center gap-4">
-                  <div className="rounded-xl bg-amber-500/15 p-3 text-amber-300">
-                    <HandHeart size={22} />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-text">Faster Pledge Cycles</h3>
-                    <p className="mt-1 text-sm leading-6 text-textMuted">Donors can quickly commit support where it creates immediate value.</p>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-[#111c33] px-3 py-2 text-right">
-                    <p className="text-[10px] uppercase tracking-[0.16em] text-textMuted">Pledge Cycle</p>
-                    <p className="mt-1 text-2xl font-semibold text-amber-300">3.2x</p>
-                    <p className="text-xs text-textMuted">faster</p>
-                  </div>
-                </div>
-              </div>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#07101d]/70 via-transparent to-[#07101d]/20"></div>
 
-              <div className="hidden lg:absolute right-0 top-[27rem] w-[22rem] rounded-3xl border border-cyan-500/20 bg-[#0f1a31]/95 p-4 shadow-2xl shadow-cyan-950/30 backdrop-blur-md">
-                <div className="grid grid-cols-[1fr_auto] gap-4">
-                  <div>
-                    <div className="mb-3 inline-flex rounded-xl bg-cyan-500/15 p-3 text-cyan-300">
-                      <ChartNoAxesCombined size={24} />
-                    </div>
-                    <h3 className="text-lg font-semibold text-text">Trackable Outcomes</h3>
-                    <p className="mt-2 max-w-[13rem] text-sm leading-6 text-textMuted">
-                      Watch request progress improve with transparent fulfillment signals.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-[#111c33] p-3">
-                    <p className="text-[10px] uppercase tracking-[0.16em] text-textMuted">Fulfillment Progress</p>
-                    <p className="mt-2 text-3xl font-semibold text-text">86%</p>
-                    <div className="mt-3 h-2 w-24 rounded-full bg-slate-700">
-                      <div className="h-2 w-[86%] rounded-full bg-gradient-to-r from-cyan-300 to-teal-400"></div>
-                    </div>
-                    <p className="mt-2 text-[10px] text-cyan-300">+24% this month</p>
-                  </div>
-                </div>
+              <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/15 bg-[#07101d]/70 p-4 backdrop-blur-md sm:bottom-6 sm:left-6 sm:right-6">
+                <p className="text-xs uppercase tracking-[0.16em] text-cyan-300">Real Seva, Real Smiles</p>
+                <p className="mt-1 text-sm font-medium text-text sm:text-base">Every pledge reaches people who need help the most.</p>
               </div>
             </div>
           </div>
